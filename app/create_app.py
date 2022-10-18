@@ -12,7 +12,7 @@ _log = logging.getLogger(__name__)
 
 
 def create_app():
-    print()
+    print("ali")
     """Construct the core application."""
     _log.info("start create the app.")
 
