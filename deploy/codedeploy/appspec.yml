@@ -1,0 +1,27 @@
+version: 0.0
+os: linux
+files:
+
+hooks:
+  # All hook scripts are assumed to be in the deploy/codedeploy directory located at the root of the deployment zip archive
+  ApplicationStop:
+    - location: deploy/codedeploy/app_stop.sh
+      timeout: 180
+      runas: root
+  BeforeInstall:
+    - location: deploy/codedeploy/before_install.sh
+      timeout: 180
+      runas: root
+  AfterInstall:
+    - location: deploy/codedeploy/after_install.sh
+      timeout: 180
+      runas: root
+  ApplicationStart:
+    - location: deploy/codedeploy/app_start.sh
+      timeout: 180
+      runas: root
+  ValidateService:
+    - location: deploy/codedeploy/validate_service.sh
+      timeout: 180
+      runas: root
+

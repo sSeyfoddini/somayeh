@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Starting PreBuild Test stage on `date`
+  build:
+    commands:
+      - echo Running test cases before the docker build
+      - ./deploy/prebuildtest.sh
+  post_build:
+    commands:
+      - echo PreBuild Test stage completed on `date`

@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Starting Post Build Test stage on `date`
+      - export DOCKER_IMAGE_REPO="$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME"
+      - export DOCKER_IMAGE_TAG="$IMAGE_TAG"
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $DOCKER_IMAGE_REPO 
+      - echo "${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}"
+      - docker pull "${DOCKER_IMAGE_REPO}:${DOCKER_IMAGE_TAG}"
+  build:
+    commands:
+      - echo Running test cases after the docker build
+      - ./deploy/postbuildtest.sh
+  post_build:
+    commands:
+      - echo Post Build Test stage completed on `date`

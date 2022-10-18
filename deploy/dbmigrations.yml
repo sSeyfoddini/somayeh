@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Starting DbMigrations stage on `date`
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
+  build:
+    commands:
+      - echo Running Migrations
+      # TODO: Replace the below command with an actual docker command to run to trigger all the DB Migrations.
+      # If the docker container exits cleanly the pipeline stage should pass else the pipeline would fail before deploy
+      # For now everything passes
+      # - docker run $IMAGE_REPO_NAME:latest -f [your flags]
+  post_build:
+    commands:
+      - echo DbMigrations stage completed on `date`
